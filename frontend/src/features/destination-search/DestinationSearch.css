@@ -1,0 +1,128 @@
+.search-section {
+  position: relative;
+  width: 100%;
+  min-height: clamp(360px, 52vw, 680px);
+  margin: 0 auto clamp(80px, 15vw, 130px);
+  overflow: hidden;
+  border-radius: 28px;
+}
+
+.search-section::before {
+  position: absolute;
+  inset: -8px;
+  content: '';
+  background:
+    linear-gradient(90deg, rgb(26 23 22 / 48%), rgb(26 23 22 / 24%)),
+    url('./assets/destination-background.webp') center / cover no-repeat;
+  filter: blur(4px);
+  transform: scale(1.02);
+}
+
+.search-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: clamp(50px, 8vw, 105px) 7% 55px;
+  color: white;
+  text-align: center;
+}
+
+.search-content .eyebrow {
+  margin: 0;
+}
+
+.eyebrow.light {
+  color: rgb(255 255 255 / 75%);
+}
+
+.search-content h2 {
+  margin: 12px 0 8px;
+  font-size: clamp(23px, 3.3vw, 42px);
+  font-weight: 300;
+}
+
+.search-intro {
+  max-width: 440px;
+  margin: 0 auto;
+  color: rgb(255 255 255 / 83%);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.search-form {
+  display: flex;
+  max-width: 1100px;
+  margin: clamp(48px, 8vw, 95px) auto 0;
+  padding: 10px;
+  gap: 10px;
+  border-radius: 18px;
+  background: rgb(255 255 255 / 20%);
+  backdrop-filter: blur(12px);
+}
+
+.field {
+  display: flex;
+  min-width: 0;
+  height: 54px;
+  padding: 0 16px;
+  flex: 1;
+  align-items: center;
+  gap: 10px;
+  border-radius: 12px;
+  color: var(--plum);
+  background: rgb(255 255 255 / 72%);
+}
+
+.field-icon {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+}
+
+.search-form input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  color: var(--plum);
+  background: transparent;
+  font: inherit;
+  font-size: 12px;
+}
+
+.search-form input::placeholder {
+  color: #655d62;
+}
+
+.search-form button {
+  min-width: 150px;
+  border: 0;
+  border-radius: 12px;
+  color: white;
+  background: var(--plum);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+@media (max-width: 700px) {
+  .search-section {
+    min-height: 460px;
+    margin-bottom: 70px;
+    border-radius: 22px;
+  }
+
+  .search-content {
+    padding: 55px 6% 40px;
+  }
+
+  .search-form {
+    margin-top: 35px;
+    flex-direction: column;
+  }
+
+  .field,
+  .search-form button {
+    width: 100%;
+    min-height: 48px;
+  }
+}

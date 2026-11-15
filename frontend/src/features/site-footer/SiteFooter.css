@@ -1,0 +1,141 @@
+.site-footer {
+  position: relative;
+  width: 100%;
+  min-height: 220px;
+  margin: 0;
+  padding: 24px 10% 18px;
+  border-radius: 24px 24px 0 0;
+  color: #e6e1e4;
+  background: #4b424a;
+  font-size: 11px;
+}
+
+.footer-waves {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  fill: #e8e8e8;
+  pointer-events: none;
+}
+
+.footer-content {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  min-height: 178px;
+  grid-template-columns: 1.25fr 0.7fr 1fr;
+  align-items: center;
+  gap: 5%;
+}
+
+.footer-brand {
+  position: relative;
+  align-self: center;
+}
+
+.liberty-statue {
+  position: absolute;
+  bottom: 100%;
+  left: 1px;
+  display: none;
+  width: 100px;
+  height: 170px;
+  margin: 0;
+  object-fit: contain;
+  object-position: bottom;
+}
+
+.footer-brand .brand {
+  position: relative;
+  display: block;
+  width: 86px;
+  height: 28px;
+  color: white;
+}
+
+.footer-brand-art {
+  position: absolute;
+  bottom: 0;
+  left: 7px;
+  display: block;
+  width: 86px;
+  height: 246px;
+}
+
+.footer-brand .brand-logo {
+  display: none;
+}
+
+.footer-brand p {
+  max-width: 190px;
+  margin: 7px 0 0;
+  color: #c1babe;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.footer-links a {
+  color: #c1babe;
+  font-size: 10px;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  color: white;
+}
+
+@media (max-width: 700px) {
+  .site-footer {
+    min-height: 224px;
+    padding: 24px 6% 18px;
+    border-radius: 18px 18px 0 0;
+  }
+
+  .footer-content {
+    min-height: 182px;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px 12px;
+  }
+
+  .footer-brand {
+    grid-column: 1 / -1;
+  }
+
+  .liberty-statue {
+    display: block;
+    width: 50px;
+    height: 92px;
+    left: 1px;
+  }
+
+  .footer-brand .brand {
+    display: inline-block;
+    width: auto;
+  }
+
+  .footer-brand-art {
+    display: none;
+  }
+
+  .footer-brand .brand-logo {
+    display: block;
+    width: 168px;
+    height: 28px;
+  }
+
+  .footer-links {
+    gap: 12px;
+  }
+
+  .footer-links a {
+    font-size: 9px;
+  }
+}
