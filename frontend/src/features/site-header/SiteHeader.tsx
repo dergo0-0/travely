@@ -11,7 +11,9 @@ const navigationLinks = [
   { href: '#about', label: 'Про сайт' },
 ];
 
-export default function SiteHeader() {
+type SiteHeaderProps = { username: string | null };
+
+export default function SiteHeader({ username }: SiteHeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
@@ -34,7 +36,7 @@ export default function SiteHeader() {
         <a href="#saved" aria-label="Обране">
           <Icon name="heart" />
         </a>
-        <a href="#account" aria-label="Профіль">
+        <a href={username ? '#account' : '#login'} aria-label={username ? `Профіль: ${username}` : 'Увійти'}>
           <Icon name="user" />
         </a>
       </div>
