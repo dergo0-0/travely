@@ -89,7 +89,7 @@
   left: 0;
   width: 100%;
   height: 48%;
-  overflow: visible;
+  overflow: hidden;
   fill: none;
   pointer-events: none;
 }
