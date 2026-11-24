@@ -48,7 +48,8 @@ body {
 
 .site-content.is-paused.is-deep-paused {
   transform: scale(1.045);
-  transition-duration: 560ms, 900ms;
+  transition-duration: 560ms, 5000ms;
+  transition-timing-function: ease, ease-in-out;
 }
 
 @media (prefers-reduced-motion: reduce) {
