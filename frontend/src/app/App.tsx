@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import AuthPage from '../features/authentication/AuthPage';
 import SiteFooter from '../features/site-footer/SiteFooter';
 import SiteHeader from '../features/site-header/SiteHeader';
@@ -11,9 +11,14 @@ export default function App() {
   const [route, setRoute] = useState(window.location.hash || '#home');
   const [username, setUsername] = useState<string | null>(() => getSessionUsername());
   const [isDeepPaused, setIsDeepPaused] = useState(false);
+  const previousPageHash = useRef('#home');
   const isAuthOpen = route === '#login' || route === '#register' || route === '#account';
   const mode = isAuthOpen ? route.slice(1) as 'login' | 'register' | 'account' : 'login';
-  const closeAuth = useCallback(() => { window.location.hash = '#home'; }, []);
+  const closeAuth = useCallback(() => {
+    const pageHash = previousPageHash.current;
+    window.history.replaceState(window.history.state, '', pageHash);
+    setRoute(pageHash);
+  }, []);
 
   useEffect(() => {
     function syncLocation() {
@@ -24,6 +29,10 @@ export default function App() {
     window.addEventListener('hashchange', syncLocation);
     return () => window.removeEventListener('hashchange', syncLocation);
   }, []);
+
+  useEffect(() => {
+    if (!isAuthOpen) previousPageHash.current = route;
+  }, [isAuthOpen, route]);
 
   useEffect(() => {
     if (!isAuthOpen) {
@@ -52,11 +61,11 @@ export default function App() {
         onClose={closeAuth}
         onSuccess={(signedInUser) => {
           setUsername(signedInUser);
-          window.location.hash = '#home';
+          closeAuth();
         }}
         onSignOut={() => {
           setUsername(null);
-          window.location.hash = '#home';
+          closeAuth();
         }}
       />
     </>
