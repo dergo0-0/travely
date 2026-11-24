@@ -14,8 +14,9 @@ export default function App() {
   const [isDeepPaused, setIsDeepPaused] = useState(false);
   const previousPageHash = useRef('#home');
   const isAuthOpen = route === '#login' || route === '#register' || route === '#account';
-  const isCollection = route.startsWith('#collection');
-  const collectionQuery = isCollection ? new URLSearchParams(route.split('?')[1] ?? '').get('city')?.trim() ?? '' : '';
+  const backgroundRoute = isAuthOpen ? previousPageHash.current : route;
+  const isCollection = backgroundRoute.startsWith('#collection');
+  const collectionQuery = isCollection ? new URLSearchParams(backgroundRoute.split('?')[1] ?? '').get('city')?.trim() ?? '' : '';
   const mode = isAuthOpen ? route.slice(1) as 'login' | 'register' | 'account' : 'login';
   const closeAuth = useCallback(() => {
     const pageHash = previousPageHash.current;

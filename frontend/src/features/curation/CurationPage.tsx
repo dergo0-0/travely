@@ -66,7 +66,7 @@ export default function CurationPage({ query }: Props) {
     <main className="curation-page">
       <section className={`curation-hero${isTokyo ? ' is-tokyo' : ''}`} aria-labelledby="curation-title">
         {isTokyo && <img className="curation-hero-image" src={tokyoHero} alt="Пагода, цвітіння сакури та гора Фудзі" />}
-        <h1 id="curation-title">{destination.toLocaleUpperCase('uk')}</h1>
+        <h1 id="curation-title">{isTokyo ? 'TOKYO' : destination.toLocaleUpperCase('uk')}</h1>
         <form className="curation-hero-fields" onSubmit={handleSearch} aria-label="Параметри подорожі">
           <label>
             <Icon name="location" />

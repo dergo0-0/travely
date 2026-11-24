@@ -42,6 +42,7 @@ body {
 }
 
 .site-content {
+  padding-top: 56px;
   transform-origin: center top;
   transition: filter 560ms ease, transform 560ms ease;
 }
@@ -61,6 +62,10 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .site-content { transition: none; }
+}
+
+@media (max-width: 700px) {
+  .site-content { padding-top: 60px; }
 }
 
 button,

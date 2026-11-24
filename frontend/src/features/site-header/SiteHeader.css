@@ -1,12 +1,13 @@
 .site-header {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 50%;
   z-index: 5;
   isolation: isolate;
   display: flex;
   width: min(var(--content-width), 80%);
   height: 56px;
-  margin: 0 auto;
+  transform: translateX(-50%);
   align-items: center;
   justify-content: space-between;
   gap: 28px;
