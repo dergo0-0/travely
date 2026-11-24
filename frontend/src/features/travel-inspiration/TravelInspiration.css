@@ -47,8 +47,12 @@
   left: 0;
   width: 100%;
   height: 80%;
-  overflow: hidden;
-  fill: #4b4348;
+  overflow: visible;
+  fill: none;
+  stroke: #4b4348;
+  stroke-width: 34;
+  stroke-linecap: round;
+  stroke-linejoin: round;
   pointer-events: none;
 }
 
@@ -177,6 +181,7 @@
   .discover-route {
     top: 42%;
     height: 42%;
+    stroke-width: 55;
   }
 
   .discover-pin-map {
