@@ -48,7 +48,7 @@ export default function DestinationSearch() {
         <form className="search-form" onSubmit={handleSubmit}>
           <label className="field">
             <Icon className="field-icon" name="location" />
-            <input name="city" type="search" placeholder="Місто або місце" aria-label="Місто або місце" />
+            <input name="city" type="text" inputMode="search" placeholder="Місто або місце" aria-label="Місто або місце" />
           </label>
           <label className="field">
             <Icon className="field-icon" name="calendar" />
@@ -69,9 +69,6 @@ export default function DestinationSearch() {
             {isLoading ? 'Шукаємо…' : 'Пошук'}
           </button>
         </form>
-        <p className="search-capabilities">
-          Зараз пошук працює за назвою місця, містом або категорією. Фільтри за датою та кількістю мандрівників з’являться пізніше.
-        </p>
         <div className="search-results" aria-live="polite" aria-busy={isLoading}>
           {error && <p className="search-message is-error" role="status">{error}</p>}
           {!error && isLoading && <p className="search-message" role="status">Шукаємо «{query}»…</p>}

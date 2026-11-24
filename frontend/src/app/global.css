@@ -26,6 +26,13 @@ html {
   scroll-behavior: smooth;
 }
 
+#home,
+#destinations,
+#routes,
+#about {
+  scroll-margin-top: 60px;
+}
+
 body {
   min-width: 320px;
   margin: 0;

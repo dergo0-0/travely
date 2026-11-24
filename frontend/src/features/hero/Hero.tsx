@@ -15,15 +15,18 @@ export default function Hero() {
         <span className="hero-scroll" aria-hidden="true">
           <Icon name="arrow-down" />
         </span>
+        <a className="hero-photo-cta" href="#destinations">
+          Куди хочете поїхати? <Icon name="arrow-up-right" />
+        </a>
       </div>
       <div className="hero-photo">
+        <svg className="hero-route" viewBox="0 0 1920 945" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M-60 995 C90 730 255 555 430 585 C730 595 1040 585 1260 540 C1315 480 1330 260 1380 205 C1500 40 1720 -30 1980 185" />
+        </svg>
         <img
           src={londonWaterfront}
           alt="Панорама Лондона з колесом огляду"
         />
-        <a className="hero-photo-cta" href="#destinations">
-          Куди хочете поїхати? <Icon name="arrow-up-right" />
-        </a>
         <span className="map-pin pin-one" aria-hidden="true">
           <Icon name="map" />
         </span>
@@ -31,14 +34,6 @@ export default function Hero() {
           <Icon name="location" />
         </span>
       </div>
-      <svg
-        className="hero-route"
-        viewBox="0 0 1000 190"
-        preserveAspectRatio="none"
-        aria-hidden="true"
-      >
-        <path d="M-20 165 C120 65 165 100 300 110 C420 118 480 80 585 44 C710 2 790 8 870 30 S965 78 1030 12" />
-      </svg>
     </section>
   );
 }

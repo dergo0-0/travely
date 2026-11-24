@@ -1,5 +1,6 @@
 .hero {
   position: relative;
+  isolation: isolate;
   width: 100%;
   min-height: clamp(520px, 58vw, 1080px);
   margin: 0 auto clamp(72px, 14vw, 120px);
@@ -28,7 +29,8 @@
 }
 
 .hero-scroll {
-  display: inline-flex;
+  display: flex;
+  width: max-content;
   margin-top: 5px;
   color: var(--plum);
 }
@@ -40,32 +42,29 @@
 
 .hero-photo {
   position: absolute;
+  z-index: 1;
   right: 0;
   bottom: 0;
   left: 0;
-  height: 64%;
-  overflow: hidden;
-  border-radius: 0 0 34px 34px;
-  background: var(--paper);
+  aspect-ratio: 1920 / 945;
 }
 
 .hero-photo img {
   position: absolute;
+  z-index: 1;
   right: 0;
   bottom: 0;
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center bottom;
+  object-fit: contain;
 }
 
 .hero-photo-cta {
-  position: absolute;
-  top: 12%;
-  left: 10.5%;
   display: inline-flex;
   min-height: 42px;
+  width: max-content;
+  margin-top: 12px;
   padding: 0 22px;
   align-items: center;
   gap: 14px;
@@ -83,13 +82,11 @@
 
 .hero-route {
   position: absolute;
-  z-index: 1;
-  right: 0;
-  bottom: 13%;
-  left: 0;
+  z-index: 0;
+  inset: 0;
   width: 100%;
-  height: 48%;
-  overflow: hidden;
+  height: 100%;
+  overflow: visible;
   fill: none;
   pointer-events: none;
 }
@@ -97,20 +94,21 @@
 .hero-route path {
   stroke: #51464f;
   stroke-linecap: round;
-  stroke-width: 13;
+  stroke-width: 36;
 }
 
 .map-pin {
   position: absolute;
   z-index: 2;
   display: grid;
-  width: 32px;
-  height: 32px;
+  width: clamp(32px, 3vw, 56px);
+  height: clamp(32px, 3vw, 56px);
   place-items: center;
   border: 1.5px solid var(--plum);
   border-radius: 50%;
   color: var(--plum);
   background: white;
+  transform: translate(-50%, -50%);
 }
 
 .map-pin svg {
@@ -119,13 +117,13 @@
 }
 
 .pin-one {
-  top: 61%;
-  left: 19%;
+  top: 61.9%;
+  left: 22.4%;
 }
 
 .pin-two {
-  top: 17%;
-  right: 28%;
+  top: 21.7%;
+  left: 71.9%;
 }
 
 @media (max-width: 700px) {
@@ -141,26 +139,18 @@
   }
 
   .hero-photo {
-    height: 74%;
+    width: 160%;
+    left: -30%;
   }
 
   .hero-photo img {
-    width: 100%;
-    height: 100%;
-    object-position: right bottom;
+    object-position: center bottom;
   }
 
   .hero-photo-cta {
-    top: 12%;
-    left: 6%;
     min-height: 38px;
     padding: 0 16px;
     font-size: 10px;
-  }
-
-  .hero-route {
-    bottom: 11%;
-    height: 40%;
   }
 
   .map-pin {
@@ -173,21 +163,8 @@
     height: 13px;
   }
 }
-
-/* Keep the exported cutout above the route, so the skyline occludes it. */
-.hero { isolation: isolate; }
-.hero-photo { z-index: 1; height: auto; aspect-ratio: 1920 / 945; overflow: visible; background: transparent; }
-.hero-photo img { height: auto; object-fit: contain; }
-.hero-route { z-index: 0; bottom: 25%; height: 40%; }
-.hero-copy { z-index: 2; }
-.hero-photo-cta, .map-pin { z-index: 2; }
-.hero-photo-cta { top: 24%; }
 @media (max-width: 700px) {
   .hero { min-height: auto; height: clamp(390px, 90vw, 630px); overflow: clip; }
-  .hero-photo { width: 160%; max-width: none; left: -30%; height: auto; }
-  .hero-photo img { height: auto; }
-  .hero-photo-cta { top: 12%; left: 22.5%; }
   .hero-copy { padding-top: 24px; }
   .hero h1 { font-size: clamp(48px, 11.5vw, 80px); }
-  .hero-route { bottom: 28%; height: 30%; }
 }
