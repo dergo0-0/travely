@@ -38,6 +38,7 @@ services:
       context: ./frontend
     environment:
       API_PROXY_TARGET: http://backend:8000
+      LOCATIONS_API_TARGET: ${LOCATIONS_API_TARGET:-https://nav-backend-eight.vercel.app}
     ports:
       - "5173:5173"
     depends_on:

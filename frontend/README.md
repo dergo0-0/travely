@@ -4,14 +4,14 @@ React, TypeScript і Vite frontend для TRAVELY. Інтерфейс украї
 
 ## Локальний запуск
 
-Потрібен Django API на `http://127.0.0.1:8000`:
+За замовчуванням Vite проксирує `/api/locations/*` до публічного бекенду `https://nav-backend-eight.vercel.app`, а JWT і реєстрацію — до локального Django на `http://127.0.0.1:8000`:
 
 ```bash
 npm install
 npm run dev
 ```
 
-Vite проксирує `/api/*` до Django. Змініть `API_PROXY_TARGET`, якщо бекенд запущений за іншою адресою. У кореневому `docker-compose.yml` цей параметр вказує на контейнер `backend`.
+`API_PROXY_TARGET` налаштовує Django для авторизації; `LOCATIONS_API_TARGET` — джерело локацій. Публічний бекенд зараз повертає 500 для пошуку з параметром `search`; клієнт у такому разі бере відкритий список локацій і фільтрує його локально. JWT-маршрути публічного бекенду зараз повертають 404.
 
 Для production-збірки виконайте `npm run build`; перегляд готової збірки — `npm run preview`.
 
