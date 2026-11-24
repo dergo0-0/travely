@@ -10,6 +10,11 @@
   align-items: center;
   justify-content: space-between;
   gap: 28px;
+  transition: filter 560ms ease;
+}
+
+.site-header.is-paused {
+  filter: grayscale(1) blur(14px) brightness(.72);
 }
 
 .site-header::before {
@@ -142,4 +147,8 @@
   .brand-logo { width: 95px; height: 18px; }
   .header-actions a { padding: 0 6px; font-size: 8px; }
   .menu-toggle { width: 32px; padding: 6px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header { transition: none; }
 }

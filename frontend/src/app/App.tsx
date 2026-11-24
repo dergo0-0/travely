@@ -45,8 +45,8 @@ export default function App() {
 
   return (
     <>
+      <SiteHeader username={username} isPaused={isAuthOpen} />
       <div className={`site-content${isAuthOpen ? ' is-paused' : ''}${isAuthOpen && isDeepPaused ? ' is-deep-paused' : ''}`} aria-hidden={isAuthOpen}>
-        <SiteHeader username={username} />
         <main id="home">
           <Hero />
           <DestinationSearch />

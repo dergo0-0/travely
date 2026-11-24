@@ -11,13 +11,13 @@ const navigationLinks = [
   { href: '#about', label: 'Про сайт' },
 ];
 
-type SiteHeaderProps = { username: string | null };
+type SiteHeaderProps = { username: string | null; isPaused: boolean };
 
-export default function SiteHeader({ username }: SiteHeaderProps) {
+export default function SiteHeader({ username, isPaused }: SiteHeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="site-header">
+    <header className={`site-header${isPaused ? ' is-paused' : ''}`} aria-hidden={isPaused} inert={isPaused}>
       <a className="brand" href="#home" aria-label="TRAVELY — на головну">
         <BrandLogo className="brand-logo" />
       </a>
