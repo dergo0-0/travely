@@ -10,6 +10,7 @@ import { getSessionUsername } from '../shared/api/client';
 export default function App() {
   const [route, setRoute] = useState(window.location.hash || '#home');
   const [username, setUsername] = useState<string | null>(() => getSessionUsername());
+  const [isDeepPaused, setIsDeepPaused] = useState(false);
   const isAuthOpen = route === '#login' || route === '#register' || route === '#account';
   const mode = isAuthOpen ? route.slice(1) as 'login' | 'register' | 'account' : 'login';
   const closeAuth = useCallback(() => { window.location.hash = '#home'; }, []);
@@ -24,9 +25,18 @@ export default function App() {
     return () => window.removeEventListener('hashchange', syncLocation);
   }, []);
 
+  useEffect(() => {
+    if (!isAuthOpen) {
+      setIsDeepPaused(false);
+      return;
+    }
+    const timer = window.setTimeout(() => setIsDeepPaused(true), 1800);
+    return () => window.clearTimeout(timer);
+  }, [isAuthOpen]);
+
   return (
     <>
-      <div className={`site-content${isAuthOpen ? ' is-paused' : ''}`} aria-hidden={isAuthOpen}>
+      <div className={`site-content${isAuthOpen ? ' is-paused' : ''}${isAuthOpen && isDeepPaused ? ' is-deep-paused' : ''}`} aria-hidden={isAuthOpen}>
         <SiteHeader username={username} />
         <main id="home">
           <Hero />

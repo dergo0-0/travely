@@ -1,6 +1,8 @@
 .site-header {
-  position: relative;
+  position: sticky;
+  top: 0;
   z-index: 5;
+  isolation: isolate;
   display: flex;
   width: min(var(--content-width), 80%);
   height: 56px;
@@ -8,6 +10,20 @@
   align-items: center;
   justify-content: space-between;
   gap: 28px;
+}
+
+.site-header::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  background: #eeeceee8;
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid #51464f12;
 }
 
 .brand {

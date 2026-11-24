@@ -41,9 +41,14 @@ body {
 
 .site-content.is-paused {
   filter: grayscale(1) blur(14px) brightness(.72);
-  transform: scale(1.045);
+  transform: scale(1.015);
   pointer-events: none;
   user-select: none;
+}
+
+.site-content.is-paused.is-deep-paused {
+  transform: scale(1.045);
+  transition-duration: 560ms, 2800ms;
 }
 
 @media (prefers-reduced-motion: reduce) {
