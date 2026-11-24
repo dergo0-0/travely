@@ -34,6 +34,22 @@ body {
   background: var(--paper);
 }
 
+.site-content {
+  transform-origin: center top;
+  transition: filter 560ms ease, transform 560ms ease;
+}
+
+.site-content.is-paused {
+  filter: grayscale(1) blur(14px) brightness(.72);
+  transform: scale(1.045);
+  pointer-events: none;
+  user-select: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-content { transition: none; }
+}
+
 button,
 input {
   font: inherit;

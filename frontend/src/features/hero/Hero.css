@@ -173,3 +173,21 @@
     height: 13px;
   }
 }
+
+/* Keep the exported cutout above the route, so the skyline occludes it. */
+.hero { isolation: isolate; }
+.hero-photo { z-index: 1; height: auto; aspect-ratio: 1920 / 945; overflow: visible; background: transparent; }
+.hero-photo img { height: auto; object-fit: contain; }
+.hero-route { z-index: 0; bottom: 25%; height: 40%; }
+.hero-copy { z-index: 2; }
+.hero-photo-cta, .map-pin { z-index: 2; }
+.hero-photo-cta { top: 24%; }
+@media (max-width: 700px) {
+  .hero { min-height: auto; height: clamp(390px, 90vw, 630px); overflow: clip; }
+  .hero-photo { width: 160%; max-width: none; left: -30%; height: auto; }
+  .hero-photo img { height: auto; }
+  .hero-photo-cta { top: 12%; left: 22.5%; }
+  .hero-copy { padding-top: 24px; }
+  .hero h1 { font-size: clamp(48px, 11.5vw, 80px); }
+  .hero-route { bottom: 28%; height: 30%; }
+}

@@ -1,4 +1,4 @@
-import londonWaterfront from './assets/london-waterfront.webp';
+import londonWaterfront from './assets/london-cutout.png';
 import Icon from '../../shared/ui/Icon';
 import './Hero.css';
 

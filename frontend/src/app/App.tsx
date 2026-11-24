@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import AuthPage from '../features/authentication/AuthPage';
 import SiteFooter from '../features/site-footer/SiteFooter';
 import SiteHeader from '../features/site-header/SiteHeader';
@@ -10,6 +10,9 @@ import { getSessionUsername } from '../shared/api/client';
 export default function App() {
   const [route, setRoute] = useState(window.location.hash || '#home');
   const [username, setUsername] = useState<string | null>(() => getSessionUsername());
+  const isAuthOpen = route === '#login' || route === '#register' || route === '#account';
+  const mode = isAuthOpen ? route.slice(1) as 'login' | 'register' | 'account' : 'login';
+  const closeAuth = useCallback(() => { window.location.hash = '#home'; }, []);
 
   useEffect(() => {
     function syncLocation() {
@@ -21,12 +24,22 @@ export default function App() {
     return () => window.removeEventListener('hashchange', syncLocation);
   }, []);
 
-  if (route === '#login' || route === '#register' || route === '#account') {
-    const mode = route.slice(1) as 'login' | 'register' | 'account';
-    return (
+  return (
+    <>
+      <div className={`site-content${isAuthOpen ? ' is-paused' : ''}`} aria-hidden={isAuthOpen}>
+        <SiteHeader username={username} />
+        <main id="home">
+          <Hero />
+          <DestinationSearch />
+          <TravelInspiration />
+        </main>
+        <SiteFooter />
+      </div>
       <AuthPage
+        open={isAuthOpen}
         mode={mode}
         username={username}
+        onClose={closeAuth}
         onSuccess={(signedInUser) => {
           setUsername(signedInUser);
           window.location.hash = '#home';
@@ -36,18 +49,6 @@ export default function App() {
           window.location.hash = '#home';
         }}
       />
-    );
-  }
-
-  return (
-    <>
-      <SiteHeader username={username} />
-      <main id="home">
-        <Hero />
-        <DestinationSearch />
-        <TravelInspiration />
-      </main>
-      <SiteFooter />
     </>
   );
 }

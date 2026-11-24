@@ -33,12 +33,10 @@ export default function SiteHeader({ username }: SiteHeaderProps) {
         ))}
       </nav>
       <div className="header-actions">
-        <a href="#saved" aria-label="Обране">
-          <Icon name="heart" />
-        </a>
-        <a href={username ? '#account' : '#login'} aria-label={username ? `Профіль: ${username}` : 'Увійти'}>
-          <Icon name="user" />
-        </a>
+        {username ? <a className="header-login" href="#account" aria-label={`Профіль: ${username}`}>Профіль</a> : <>
+          <a className="header-login" href="#login">Увійти</a>
+          <a className="header-register" href="#register">Зареєструватися</a>
+        </>}
       </div>
       <button
         className="menu-toggle"
