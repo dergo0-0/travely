@@ -5,6 +5,7 @@ import SiteHeader from '../features/site-header/SiteHeader';
 import DestinationSearch from '../features/destination-search/DestinationSearch';
 import Hero from '../features/hero/Hero';
 import TravelInspiration from '../features/travel-inspiration/TravelInspiration';
+import CurationPage from '../features/curation/CurationPage';
 import { getSessionUsername } from '../shared/api/client';
 
 export default function App() {
@@ -13,6 +14,8 @@ export default function App() {
   const [isDeepPaused, setIsDeepPaused] = useState(false);
   const previousPageHash = useRef('#home');
   const isAuthOpen = route === '#login' || route === '#register' || route === '#account';
+  const isCollection = route.startsWith('#collection');
+  const collectionQuery = isCollection ? new URLSearchParams(route.split('?')[1] ?? '').get('city')?.trim() ?? '' : '';
   const mode = isAuthOpen ? route.slice(1) as 'login' | 'register' | 'account' : 'login';
   const closeAuth = useCallback(() => {
     const pageHash = previousPageHash.current;
@@ -35,6 +38,10 @@ export default function App() {
   }, [isAuthOpen, route]);
 
   useEffect(() => {
+    if (isCollection) window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [isCollection]);
+
+  useEffect(() => {
     if (!isAuthOpen) {
       setIsDeepPaused(false);
       return;
@@ -47,11 +54,13 @@ export default function App() {
     <>
       <SiteHeader username={username} isPaused={isAuthOpen} />
       <div className={`site-content${isAuthOpen ? ' is-paused' : ''}${isAuthOpen && isDeepPaused ? ' is-deep-paused' : ''}`} aria-hidden={isAuthOpen}>
-        <main id="home">
-          <Hero />
-          <DestinationSearch />
-          <TravelInspiration />
-        </main>
+        {isCollection ? <CurationPage query={collectionQuery} /> : (
+          <main id="home">
+            <Hero />
+            <DestinationSearch />
+            <TravelInspiration />
+          </main>
+        )}
         <SiteFooter />
       </div>
       <AuthPage

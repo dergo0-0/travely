@@ -3,7 +3,7 @@ import './SiteHeader.css';
 
 const navigationLinks = [
   { href: '#home', label: 'Головна сторінка' },
-  { href: '#routes', label: 'Маршрути' },
+  { href: '#collection', label: 'Маршрути' },
   { href: '#destinations', label: 'Локації' },
   { href: '#news', label: 'Поради' },
   { href: '#about', label: 'Про сайт' },

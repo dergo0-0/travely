@@ -47,7 +47,7 @@ export default function SiteFooter() {
         </div>
         <nav className="footer-links" aria-label="Навігація у підвалі">
           <a href="#home">Головна сторінка</a>
-          <a href="#routes">Маршрути</a>
+          <a href="#collection">Маршрути</a>
           <a href="#destinations">Локації</a>
           <a href="#about">Про сайт</a>
         </nav>
