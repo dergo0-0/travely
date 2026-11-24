@@ -1,6 +1,4 @@
-import { useState } from 'react';
 import BrandLogo from '../../shared/ui/BrandLogo';
-import Icon from '../../shared/ui/Icon';
 import './SiteHeader.css';
 
 const navigationLinks = [
@@ -14,20 +12,14 @@ const navigationLinks = [
 type SiteHeaderProps = { username: string | null; isPaused: boolean };
 
 export default function SiteHeader({ username, isPaused }: SiteHeaderProps) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   return (
     <header className={`site-header${isPaused ? ' is-paused' : ''}`} aria-hidden={isPaused} inert={isPaused}>
       <a className="brand" href="#home" aria-label="TRAVELY — на головну">
         <BrandLogo className="brand-logo" />
       </a>
-      <nav
-        className={`main-nav${isMenuOpen ? ' is-open' : ''}`}
-        id="main-navigation"
-        aria-label="Головна навігація"
-      >
+      <nav className="main-nav" id="main-navigation" aria-label="Головна навігація">
         {navigationLinks.map(({ href, label }) => (
-          <a key={href} href={href} onClick={() => setIsMenuOpen(false)}>
+          <a key={href} href={href}>
             {label}
           </a>
         ))}
@@ -38,16 +30,6 @@ export default function SiteHeader({ username, isPaused }: SiteHeaderProps) {
           <a className="header-register" href="#register">Зареєструватися</a>
         </>}
       </div>
-      <button
-        className="menu-toggle"
-        type="button"
-        aria-label={isMenuOpen ? 'Закрити меню' : 'Відкрити меню'}
-        aria-expanded={isMenuOpen}
-        aria-controls="main-navigation"
-        onClick={() => setIsMenuOpen((isOpen) => !isOpen)}
-      >
-        <Icon name={isMenuOpen ? 'close' : 'menu'} />
-      </button>
     </header>
   );
 }
