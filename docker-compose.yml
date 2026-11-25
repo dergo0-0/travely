@@ -1,49 +1,11 @@
 services:
-  db:
-    image: postgres:17-alpine
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB:-travely}
-      POSTGRES_USER: ${POSTGRES_USER:-travely}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-travely-dev-only}
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
-      interval: 5s
-      timeout: 5s
-      retries: 10
-    restart: unless-stopped
-
-  backend:
-    build:
-      context: ./backend
-    environment:
-      DEBUG: ${DEBUG:-1}
-      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:-travely-local-development-key-change-me}
-      DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS:-localhost,127.0.0.1,backend}
-      POSTGRES_DB: ${POSTGRES_DB:-travely}
-      POSTGRES_USER: ${POSTGRES_USER:-travely}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-travely-dev-only}
-      POSTGRES_HOST: db
-      POSTGRES_PORT: 5432
-    ports:
-      - "8000:8000"
-    depends_on:
-      db:
-        condition: service_healthy
-    restart: unless-stopped
-
   frontend:
     build:
       context: ./frontend
     environment:
-      API_PROXY_TARGET: http://backend:8000
-      LOCATIONS_API_TARGET: ${LOCATIONS_API_TARGET:-https://nav-backend-eight.vercel.app}
+      API_PROXY_TARGET: ${API_PROXY_TARGET:-http://host.docker.internal:8000}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     ports:
       - "5173:5173"
-    depends_on:
-      - backend
     restart: unless-stopped
-
-volumes:
-  postgres_data:

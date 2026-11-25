@@ -15,22 +15,8 @@ export type Location = {
 export async function searchLocations(query: string, signal?: AbortSignal) {
   const params = new URLSearchParams({ search: query });
   const response = await apiRequest(`/locations/?${params}`, { signal });
-
-  if (response.ok) return parseLocations(response);
-  if (response.status < 500) {
-    throw new Error(`API request failed (${response.status})`);
-  }
-
-  // The deployed backend currently errors while recording search history.
-  // Its unfiltered location list is still available, so keep search usable.
-  const allResponse = await apiRequest('/locations/', { signal });
-  if (!allResponse.ok) throw new Error(`API request failed (${allResponse.status})`);
-  const locations = await parseLocations(allResponse);
-  const term = query.toLocaleLowerCase('uk');
-  return locations.filter((location) =>
-    [location.name, location.city, location.country, location.category]
-      .some((value) => value?.toLocaleLowerCase('uk').includes(term)),
-  );
+  if (!response.ok) throw new Error(`API request failed (${response.status})`);
+  return parseLocations(response);
 }
 
 async function parseLocations(response: Response): Promise<Location[]> {

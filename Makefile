@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := up
 
-.PHONY: up down logs shell migrate
+.PHONY: up down logs
 
 up:
 	docker compose up --build -d
@@ -10,9 +10,3 @@ down:
 
 logs:
 	docker compose logs -f
-
-shell:
-	docker compose exec backend python manage.py shell
-
-migrate:
-	docker compose exec backend python manage.py migrate
