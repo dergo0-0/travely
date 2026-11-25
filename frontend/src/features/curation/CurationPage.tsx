@@ -68,6 +68,10 @@ export default function CurationPage({ query, username }: Props) {
     setContentError(false);
     setCover(null);
     setPosts([]);
+    setPostSearch('');
+    setFormOpen(false);
+    setEditingPost(null);
+    setSaveError('');
     void Promise.all([getCityCovers(destination, controller.signal), getCityPosts(destination, controller.signal)])
       .then(([covers, cityPosts]) => { setCover(covers[0] ?? null); setPosts(cityPosts); })
       .catch((cause: unknown) => {
@@ -234,13 +238,13 @@ export default function CurationPage({ query, username }: Props) {
               </div>
             </article>)}
           </div>}
-          {!contentLoading && !contentError && posts.length === 0 && !cover && <div className="curation-empty-city" role="status">
+          {!contentLoading && !contentError && posts.length === 0 && !cover && !isTokyo && <div className="curation-empty-city" role="status">
             <Icon name="map" />
             <h3>Покажіть своє місто світові</h3>
             <p>Для «{destination}» поки немає постів і головного фото. Зареєструйтеся, щоб додати фото та розповісти про місця, які варто відвідати.</p>
             {username ? <button className="curation-primary-button" type="button" onClick={() => startPost()}>Додати перший пост</button> : <a className="curation-primary-button" href="#register">Зареєструватися</a>}
           </div>}
-          {!contentLoading && !contentError && posts.length === 0 && cover && <p className="curation-state">Поки що немає постів про це місто. {username ? 'Розкажіть про нього першим.' : 'Зареєструйтеся, щоб поділитися історією.'}</p>}
+          {!contentLoading && !contentError && posts.length === 0 && (cover || isTokyo) && <div className="curation-empty-city" role="status"><h3>Історії ще попереду</h3><p>Поки що немає постів про «{destination}». {username ? 'Розкажіть про нього першим.' : 'Зареєструйтеся, щоб поділитися своєю історією.'}</p>{username ? <button className="curation-primary-button" type="button" onClick={() => startPost()}>Написати пост</button> : <a className="curation-primary-button" href="#register">Зареєструватися</a>}</div>}
           {username && !contentLoading && !contentError && (!cover || cover.uploaded_by === username) && <form className="curation-cover-form" onSubmit={handleCoverSave}>
             <div><h3>{cover ? 'Оновити головне фото' : 'Додати головне фото міста'}</h3><p>Фото з’явиться на обкладинці підбірки для «{destination}».</p></div>
             <input type="file" accept="image/jpeg,image/png,image/webp" aria-label="Головне фото міста" onChange={(event) => setCoverImage(event.target.files?.[0] ?? null)} required />
