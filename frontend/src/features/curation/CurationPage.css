@@ -75,6 +75,7 @@
 .curation-hero-fields label:focus-within { outline: 2px solid #fff; }
 .curation-hero-fields svg { width: 17px; height: 17px; flex: 0 0 auto; }
 .curation-hero-fields input { width: 100%; min-width: 0; border: 0; outline: 0; color: white; background: transparent; font-size: 14px; }
+.curation-hero-fields input:focus-visible { outline: none; }
 .curation-hero-fields input::placeholder { color: rgb(255 255 255 / 84%); }
 .curation-hero-fields input:disabled { opacity: 1; }
 .curation-search-button { min-width: 150px; min-height: 52px; border: 0; border-radius: 16px; color: #fff; background: var(--plum); cursor: pointer; transition: background 150ms ease, transform 150ms ease; }
