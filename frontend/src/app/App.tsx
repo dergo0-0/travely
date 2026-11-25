@@ -6,6 +6,7 @@ import DestinationSearch from '../features/destination-search/DestinationSearch'
 import Hero from '../features/hero/Hero';
 import TravelInspiration from '../features/travel-inspiration/TravelInspiration';
 import CurationPage from '../features/curation/CurationPage';
+import PostPage from '../features/curation/PostPage';
 import { getSessionUsername } from '../shared/api/client';
 
 export default function App() {
@@ -16,6 +17,10 @@ export default function App() {
   const isAuthOpen = route === '#login' || route === '#register' || route === '#account';
   const backgroundRoute = isAuthOpen ? previousPageHash.current : route;
   const isCollection = backgroundRoute.startsWith('#collection');
+  const isPost = backgroundRoute.startsWith('#post?');
+  const postParams = isPost ? new URLSearchParams(backgroundRoute.split('?')[1] ?? '') : null;
+  const postId = Number(postParams?.get('id'));
+  const postCity = postParams?.get('city') ?? '';
   const collectionQuery = isCollection ? new URLSearchParams(backgroundRoute.split('?')[1] ?? '').get('city')?.trim() ?? '' : '';
   const mode = isAuthOpen ? route.slice(1) as 'login' | 'register' | 'account' : 'login';
   const closeAuth = useCallback(() => {
@@ -55,7 +60,7 @@ export default function App() {
     <>
       <SiteHeader username={username} isPaused={isAuthOpen} />
       <div className={`site-content${isAuthOpen ? ' is-paused' : ''}${isAuthOpen && isDeepPaused ? ' is-deep-paused' : ''}`} aria-hidden={isAuthOpen}>
-        {isCollection ? <CurationPage query={collectionQuery} /> : (
+        {isPost && Number.isInteger(postId) && postId > 0 ? <PostPage id={postId} city={postCity} username={username} /> : isCollection ? <CurationPage query={collectionQuery} username={username} /> : (
           <main id="home">
             <Hero />
             <DestinationSearch />

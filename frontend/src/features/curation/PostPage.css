@@ -1,0 +1,17 @@
+.post-page { width: min(1180px, 90%); min-height: 70vh; margin: 30px auto 100px; }
+.post-breadcrumb { display: flex; margin: 0 0 34px; align-items: center; gap: 10px; color: var(--muted); font-size: 12px; }
+.post-breadcrumb a, .post-footer a { color: inherit; text-decoration: none; }
+.post-breadcrumb a:hover, .post-footer a:hover { text-decoration: underline; }
+.post-hero { position: relative; display: flex; min-height: min(55vw, 570px); overflow: hidden; align-items: center; border-radius: 38px; background: linear-gradient(135deg, #a9a0a7, #51464f); }
+.post-hero > img { position: absolute; width: 100%; height: 100%; object-fit: cover; }
+.post-hero h1 { position: relative; max-width: min(660px, 80%); margin: 0 0 0 6%; padding: 22px 28px; border: 1px solid rgb(255 255 255 / 35%); border-radius: 22px; color: #fff; background: rgb(74 64 73 / 45%); backdrop-filter: blur(18px); font-size: clamp(32px, 4vw, 62px); font-weight: 400; line-height: 1.15; overflow-wrap: anywhere; }
+.post-byline { display: flex; margin: 22px 0 55px; align-items: center; gap: 12px; }
+.post-avatar { display: grid; width: 44px; height: 44px; place-items: center; border-radius: 50%; color: #fff; background: var(--plum); }
+.post-byline > div { display: flex; flex-direction: column; gap: 3px; font-size: 12px; }
+.post-byline strong { font-weight: 600; }
+.post-byline > div > span { color: var(--muted); }
+.post-body { max-width: 780px; margin: 0 auto; font-size: clamp(16px, 1.2vw, 19px); line-height: 1.85; white-space: pre-wrap; overflow-wrap: anywhere; }
+.post-body p { margin: 0 0 27px; }
+.post-footer { display: flex; max-width: 780px; margin: 60px auto 0; justify-content: space-between; gap: 20px; color: var(--plum); font-size: 13px; }
+.post-page-state { min-height: 260px; padding: 70px 20px; border-radius: 24px; background: #f7f5f6; text-align: center; }
+@media (max-width: 700px) { .post-page { margin-top: 24px; } .post-hero { min-height: 420px; border-radius: 24px; } .post-hero h1 { max-width: 90%; margin-left: 5%; padding: 18px; border-radius: 16px; } .post-byline { margin-bottom: 35px; } .post-footer { flex-direction: column; } }
