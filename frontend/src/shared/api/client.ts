@@ -50,7 +50,12 @@ export async function signIn(username: string, password: string) {
 
   if (!response.ok) {
     const payload = await response.json().catch(() => ({}));
-    throw new Error(payload.detail || 'Не вдалося увійти. Перевірте ім’я користувача та пароль.');
+    const detail = typeof payload.detail === 'string' ? payload.detail : '';
+    throw new Error(detail || (response.status >= 500
+      ? 'Сервер входу зараз недоступний. Спробуйте ще раз пізніше.'
+      : response.status === 404
+        ? 'Сервіс входу ще не оновлено на сервері.'
+        : 'Не вдалося увійти. Перевірте ім’я користувача та пароль.'));
   }
 
   const tokens = (await response.json()) as TokenPair;
@@ -68,7 +73,11 @@ export async function signUp(username: string, password: string) {
   if (!response.ok) {
     const payload = await response.json().catch(() => ({}));
     const detail = payload.username?.[0] || payload.password?.[0] || payload.detail;
-    throw new Error(detail || 'Не вдалося створити обліковий запис.');
+    throw new Error(typeof detail === 'string' && detail ? detail : response.status >= 500
+      ? 'Сервер реєстрації зараз недоступний. Спробуйте ще раз пізніше.'
+      : response.status === 404
+        ? 'Сервіс реєстрації ще не оновлено на сервері.'
+        : 'Не вдалося створити обліковий запис.');
   }
 
   await signIn(username, password);
