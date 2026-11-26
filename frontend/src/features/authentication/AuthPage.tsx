@@ -5,11 +5,11 @@ import './AuthPage.css';
 type AuthMode = 'login' | 'register' | 'account';
 type Props = { open: boolean; mode: AuthMode; username: string | null; onClose: () => void; onSuccess: (username: string) => void; onSignOut: () => void };
 
-function PasswordField({ name, placeholder, autoComplete }: { name: string; placeholder: string; autoComplete: string }) {
+function PasswordField({ name, placeholder, autoComplete, required = true, disabled = false }: { name: string; placeholder: string; autoComplete: string; required?: boolean; disabled?: boolean }) {
   const [visible, setVisible] = useState(false);
   return <label className="auth-input-wrap">
     <span className="sr-only">{placeholder}</span>
-    <input name={name} placeholder={placeholder} type={visible ? 'text' : 'password'} autoComplete={autoComplete} required />
+    <input name={name} placeholder={placeholder} type={visible ? 'text' : 'password'} autoComplete={autoComplete} required={required} disabled={disabled} />
     <button className="password-toggle" type="button" aria-label={visible ? 'Приховати пароль' : 'Показати пароль'} aria-pressed={visible} onClick={() => setVisible(!visible)}>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>{visible && <path d="m3 3 18 18"/>}</svg>
     </button>
@@ -67,7 +67,7 @@ export default function AuthPage({ open, mode, username, onClose, onSuccess, onS
   }
 
   return <div className="auth-page" data-open={open} aria-hidden={!open} inert={!open} onMouseDown={(event) => { if (event.target === event.currentTarget) onClose(); }}>
-    <section ref={dialogRef} className={`auth-card${isRegister ? ' auth-card-register' : ''}`} role="dialog" aria-modal="true" aria-label={mode === 'account' ? 'Профіль' : isRegister ? 'Реєстрація' : 'Вхід'}>
+    <section ref={dialogRef} className={`auth-card${isRegister ? ' auth-card-register' : ''}`} data-mode={mode} role="dialog" aria-modal="true" aria-label={mode === 'account' ? 'Профіль' : isRegister ? 'Реєстрація' : 'Вхід'}>
       <button className="auth-close" type="button" aria-label="Закрити вікно" onClick={onClose}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" aria-hidden="true"><path d="M5 5 19 19M19 5 5 19" /></svg></button>
       {mode === 'account' && username ? <div className="auth-account">
         <h1>Вітаємо, {username}</h1>
@@ -79,14 +79,16 @@ export default function AuthPage({ open, mode, username, onClose, onSuccess, onS
           <a href="#register" aria-current={isRegister ? 'page' : undefined}>Зареєструватися</a>
         </nav>
         <h1 className="sr-only">{isRegister ? 'Реєстрація' : 'Увійти'}</h1>
-        <form className="auth-form" onSubmit={handleSubmit} key={mode}>
+        <form className="auth-form" onSubmit={handleSubmit}>
           <label className="auth-input-wrap">
             <span className="sr-only">Електронна пошта або ім’я користувача</span>
             <input name="username" placeholder="Електронна пошта" autoComplete="username" autoCapitalize="none" spellCheck={false} required />
           </label>
           <PasswordField name="password" placeholder="Пароль" autoComplete={isRegister ? 'new-password' : 'current-password'} />
-          {isRegister ? <PasswordField name="confirmation" placeholder="Підтвердити пароль" autoComplete="new-password" /> :
-            <button className="auth-forgot" type="button" onClick={() => setError('Відновлення пароля ще не підключене. Зверніться до адміністратора сайту.')}>Забули пароль?</button>}
+          <div className="auth-confirmation" aria-hidden={!isRegister} inert={!isRegister}>
+            <div className="auth-confirmation-inner"><PasswordField name="confirmation" placeholder="Підтвердити пароль" autoComplete="new-password" required={isRegister} disabled={!isRegister} /></div>
+          </div>
+          {!isRegister && <button className="auth-forgot" type="button" onClick={() => setError('Відновлення пароля ще не підключене. Зверніться до адміністратора сайту.')}>Забули пароль?</button>}
           {error && <p className="auth-error" role="alert">{error}</p>}
           <button className="auth-submit" type="submit" disabled={isLoading}>{isLoading ? 'Зачекайте…' : isRegister ? 'Зареєструватися' : 'Увійти'}</button>
         </form>

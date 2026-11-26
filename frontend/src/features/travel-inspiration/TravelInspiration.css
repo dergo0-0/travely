@@ -150,7 +150,10 @@
   background: var(--plum);
   font-size: 12px;
   text-decoration: none;
+  transition: background-color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
 }
+.text-link:hover { background: #665963; box-shadow: 0 8px 20px rgb(81 70 79 / 18%); }
+.text-link:active { transform: scale(.98); }
 
 @media (max-width: 700px) {
   .discover-section {

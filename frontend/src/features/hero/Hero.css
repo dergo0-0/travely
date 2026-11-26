@@ -73,7 +73,10 @@
   background: var(--plum);
   font-size: 12px;
   text-decoration: none;
+  transition: background-color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
 }
+.hero-photo-cta:hover { background: #665963; box-shadow: 0 8px 20px rgb(81 70 79 / 18%); }
+.hero-photo-cta:active { transform: scale(.98); }
 
 .hero-photo-cta svg {
   width: 13px;
