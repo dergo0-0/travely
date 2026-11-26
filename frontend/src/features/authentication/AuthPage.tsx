@@ -88,9 +88,13 @@ export default function AuthPage({ open, mode, username, onClose, onSuccess, onS
           <div className="auth-confirmation" aria-hidden={!isRegister} inert={!isRegister}>
             <div className="auth-confirmation-inner"><PasswordField name="confirmation" placeholder="Підтвердити пароль" autoComplete="new-password" required={isRegister} disabled={!isRegister} /></div>
           </div>
-          {!isRegister && <button className="auth-forgot" type="button" onClick={() => setError('Відновлення пароля ще не підключене. Зверніться до адміністратора сайту.')}>Забули пароль?</button>}
+          <div className="auth-forgot-panel" aria-hidden={isRegister} inert={isRegister}>
+            <div className="auth-forgot-inner"><button className="auth-forgot" type="button" disabled={isRegister} onClick={() => setError('Відновлення пароля ще не підключене. Зверніться до адміністратора сайту.')}>Забули пароль?</button></div>
+          </div>
           {error && <p className="auth-error" role="alert">{error}</p>}
-          <button className="auth-submit" type="submit" disabled={isLoading}>{isLoading ? 'Зачекайте…' : isRegister ? 'Зареєструватися' : 'Увійти'}</button>
+          <button className="auth-submit" type="submit" disabled={isLoading}>
+            {isLoading ? 'Зачекайте…' : <><span className="auth-submit-login" aria-hidden={isRegister}>Увійти</span><span className="auth-submit-register" aria-hidden={!isRegister}>Зареєструватися</span></>}
+          </button>
         </form>
       </>}
     </section>
