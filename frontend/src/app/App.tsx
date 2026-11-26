@@ -9,12 +9,19 @@ import CurationPage from '../features/curation/CurationPage';
 import PostPage from '../features/curation/PostPage';
 import { getSessionUsername } from '../shared/api/client';
 
+function isAuthRoute(hash: string) {
+  return hash === '#login' || hash === '#register' || hash === '#account';
+}
+
 export default function App() {
-  const [route, setRoute] = useState(window.location.hash || '#home');
+  const [route, setRoute] = useState(() => {
+    const hash = window.location.hash;
+    return hash && !isAuthRoute(hash) ? hash : '#home';
+  });
   const [username, setUsername] = useState<string | null>(() => getSessionUsername());
   const [isDeepPaused, setIsDeepPaused] = useState(false);
   const previousPageHash = useRef('#home');
-  const isAuthOpen = route === '#login' || route === '#register' || route === '#account';
+  const isAuthOpen = isAuthRoute(route);
   const backgroundRoute = isAuthOpen ? previousPageHash.current : route;
   const isCollection = backgroundRoute.startsWith('#collection');
   const isPost = backgroundRoute.startsWith('#post?');
@@ -30,6 +37,11 @@ export default function App() {
   }, []);
 
   useEffect(() => {
+    // Modal hashes belong to the current visit, not a fresh page load.
+    if (isAuthRoute(window.location.hash)) {
+      window.history.replaceState(window.history.state, '', '#home');
+    }
+
     function syncLocation() {
       setRoute(window.location.hash || '#home');
       setUsername(getSessionUsername());
