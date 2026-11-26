@@ -4,8 +4,8 @@ import './SiteHeader.css';
 const navigationLinks = [
   { href: '#home', label: 'Головна сторінка' },
   { href: '#collection', label: 'Маршрути' },
-  { href: '#destinations', label: 'Локації' },
-  { href: '#news', label: 'Поради' },
+  { href: '#locations', label: 'Локації' },
+  { href: '#posts', label: 'Пости' },
   { href: '#about', label: 'Про сайт' },
 ];
 

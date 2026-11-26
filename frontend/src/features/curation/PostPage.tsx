@@ -33,7 +33,7 @@ export default function PostPage({ id, city, username }: Props) {
       </header>
       <div className="post-byline"><span className="post-avatar" aria-hidden="true">{post.author.slice(0, 1).toLocaleUpperCase('uk')}</span><div><strong>{post.author}</strong><span>{new Intl.DateTimeFormat('uk-UA', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(post.created_at))} · {post.city}</span></div></div>
       <div className="post-body">{post.body.split(/\n\n+/).map((paragraph, index) => <p key={index}>{paragraph}</p>)}</div>
-      <footer className="post-footer"><a href={backHref}>← Повернутися до підбірки</a>{username === post.author && <a href={backHref}>Мої пости та редагування</a>}</footer>
+      <footer className="post-footer"><a href={backHref}>← Повернутися до підбірки</a>{username === post.author && <a href={`${backHref}&editPost=${post.id}`}>Редагувати пост</a>}</footer>
     </article>}
   </main>;
 }

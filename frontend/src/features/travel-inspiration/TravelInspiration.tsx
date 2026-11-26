@@ -42,7 +42,7 @@ export default function TravelInspiration() {
         <p>
           Поділіться з іншими мандрівниками та допоможіть відкрити щось нове.
         </p>
-        <a className="text-link" href="#contact">
+        <a className="text-link" href="#location/new">
           Додати локацію
         </a>
       </div>

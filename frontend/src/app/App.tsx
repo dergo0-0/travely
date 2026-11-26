@@ -7,6 +7,9 @@ import Hero from '../features/hero/Hero';
 import TravelInspiration from '../features/travel-inspiration/TravelInspiration';
 import CurationPage from '../features/curation/CurationPage';
 import PostPage from '../features/curation/PostPage';
+import LocationDirectory from '../features/locations/LocationDirectory';
+import LocationPage from '../features/locations/LocationPage';
+import PostsPage from '../features/posts/PostsPage';
 import { getSessionUsername } from '../shared/api/client';
 
 function isAuthRoute(hash: string) {
@@ -25,10 +28,16 @@ export default function App() {
   const backgroundRoute = isAuthOpen ? previousPageHash.current : route;
   const isCollection = backgroundRoute.startsWith('#collection');
   const isPost = backgroundRoute.startsWith('#post?');
+  const isLocationDirectory = backgroundRoute === '#locations';
+  const isPosts = backgroundRoute === '#posts';
+  const isLocation = backgroundRoute === '#location/new' || backgroundRoute.startsWith('#location?');
+  const locationParams = isLocation && backgroundRoute.includes('?') ? new URLSearchParams(backgroundRoute.split('?')[1] ?? '') : null;
+  const locationId = Number(locationParams?.get('id'));
   const postParams = isPost ? new URLSearchParams(backgroundRoute.split('?')[1] ?? '') : null;
   const postId = Number(postParams?.get('id'));
   const postCity = postParams?.get('city') ?? '';
   const collectionQuery = isCollection ? new URLSearchParams(backgroundRoute.split('?')[1] ?? '').get('city')?.trim() ?? '' : '';
+  const collectionEditPostId = isCollection ? Number(new URLSearchParams(backgroundRoute.split('?')[1] ?? '').get('editPost')) : 0;
   const mode = isAuthOpen ? route.slice(1) as 'login' | 'register' | 'account' : 'login';
   const closeAuth = useCallback(() => {
     const pageHash = previousPageHash.current;
@@ -56,8 +65,8 @@ export default function App() {
   }, [isAuthOpen, route]);
 
   useEffect(() => {
-    if (isCollection) window.scrollTo({ top: 0, behavior: 'instant' });
-  }, [isCollection]);
+    if (isCollection || isPost || isLocationDirectory || isLocation || isPosts) window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [backgroundRoute, isCollection, isPost, isLocationDirectory, isLocation, isPosts]);
 
   useEffect(() => {
     if (!isAuthOpen) {
@@ -72,7 +81,7 @@ export default function App() {
     <>
       <SiteHeader username={username} isPaused={isAuthOpen} />
       <div className={`site-content${isAuthOpen ? ' is-paused' : ''}${isAuthOpen && isDeepPaused ? ' is-deep-paused' : ''}`} aria-hidden={isAuthOpen}>
-        {isPost && Number.isInteger(postId) && postId > 0 ? <PostPage id={postId} city={postCity} username={username} /> : isCollection ? <CurationPage query={collectionQuery} username={username} /> : (
+        {isPost && Number.isInteger(postId) && postId > 0 ? <PostPage id={postId} city={postCity} username={username} /> : isPosts ? <PostsPage username={username} /> : isLocationDirectory ? <LocationDirectory username={username} /> : isLocation ? <LocationPage id={Number.isInteger(locationId) && locationId > 0 ? locationId : undefined} username={username} /> : isCollection ? <CurationPage query={collectionQuery} username={username} editPostId={collectionEditPostId} /> : (
           <main id="home">
             <Hero />
             <DestinationSearch />

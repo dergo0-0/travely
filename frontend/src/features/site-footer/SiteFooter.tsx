@@ -48,11 +48,11 @@ export default function SiteFooter() {
         <nav className="footer-links" aria-label="Навігація у підвалі">
           <a href="#home">Головна сторінка</a>
           <a href="#collection">Маршрути</a>
-          <a href="#destinations">Локації</a>
+          <a href="#locations">Локації</a>
           <a href="#about">Про сайт</a>
         </nav>
         <nav className="footer-links" aria-label="Інформація">
-          <a href="#news">Поради</a>
+          <a href="#posts">Пости</a>
           <a href="#contact">Запитання</a>
           <a href="#privacy">Політика конфіденційності</a>
           <a href="#terms">Умови використання</a>

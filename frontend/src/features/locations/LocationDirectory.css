@@ -1,0 +1,23 @@
+.location-directory { width: min(1180px, 90%); min-height: 65vh; margin: 54px auto 110px; }
+.location-directory-heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; }
+.location-directory-heading .eyebrow { margin: 0 0 12px; }
+.location-directory-heading h1 { margin: 0; font-size: clamp(40px, 5vw, 76px); font-weight: 300; line-height: 1.06; }
+.location-directory-heading p:last-child { max-width: 620px; margin: 18px 0 0; color: var(--muted); line-height: 1.6; }
+.location-directory-add { display: inline-grid; min-height: 48px; padding: 0 24px; place-items: center; border-radius: 999px; color: #fff; background: var(--plum); text-decoration: none; white-space: nowrap; transition: background-color 150ms ease, transform 150ms ease; }
+.location-directory-add:hover { background: #665963; }
+.location-directory-add:active { transform: scale(.98); }
+.location-directory-search { display: block; margin: 42px 0 26px; }
+.location-directory-search input { width: min(640px, 100%); min-height: 56px; padding: 0 22px; border: 1px solid #d5cdd2; border-radius: 18px; outline: none; color: var(--ink); background: #fff; font-size: 15px; }
+.location-directory-search input:focus-visible { outline: 2px solid #8a7484; outline-offset: 3px; }
+.location-directory-results { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.location-directory-state { grid-column: 1 / -1; min-height: 170px; padding: 54px 24px; border: 1px solid #e1dbde; border-radius: 22px; background: #fff; text-align: center; }
+.location-directory-state a { color: var(--plum); }
+.location-directory-card { display: flex; min-width: 0; min-height: 160px; overflow: hidden; align-items: stretch; border: 1px solid #e1dbde; border-radius: 22px; color: inherit; background: #fff; text-decoration: none; box-shadow: 0 12px 32px rgb(50 41 48 / 5%); transition: transform 180ms ease, box-shadow 180ms ease; }
+.location-directory-card:hover { transform: translateY(-3px); box-shadow: 0 16px 30px rgb(50 41 48 / 11%); }
+.location-directory-card-art { display: grid; width: 34%; min-width: 105px; place-items: center; color: #796c75; background: linear-gradient(145deg, #ddd6da, #f2eef0); font-size: 48px; }
+.location-directory-card-copy { display: flex; min-width: 0; padding: 24px; flex: 1; flex-direction: column; gap: 7px; }
+.location-directory-card-copy strong { font-size: 19px; font-weight: 500; overflow-wrap: anywhere; }
+.location-directory-card-copy span { color: var(--muted); font-size: 13px; }
+.location-directory-card-copy small { margin-top: auto; color: var(--plum); font-size: 12px; }
+.location-directory-card-arrow { align-self: flex-start; padding: 22px 20px 0 0; font-size: 20px; }
+@media (max-width: 700px) { .location-directory { margin-top: 30px; } .location-directory-heading { align-items: flex-start; flex-direction: column; } .location-directory-search { margin-top: 30px; } .location-directory-results { grid-template-columns: 1fr; } .location-directory-card { min-height: 145px; } }

@@ -9,7 +9,7 @@ import osakaCastle from './assets/osaka-castle.png';
 import meijiShrine from './assets/meiji-shrine.png';
 import './CurationPage.css';
 
-type Props = { query: string; username: string | null };
+type Props = { query: string; username: string | null; editPostId?: number };
 
 const featuredPlaces = [
   { name: 'Токійський національний музей', image: tokyoMuseum, rating: '4,5', reviews: '426' },
@@ -18,7 +18,7 @@ const featuredPlaces = [
   { name: 'Храм Мейдзі', image: meijiShrine, rating: '4,7', reviews: '692' },
 ];
 
-export default function CurationPage({ query, username }: Props) {
+export default function CurationPage({ query, username, editPostId }: Props) {
   const destination = query || 'Токіо';
   const isTokyo = /^(токіо|токио|tokyo)$/i.test(destination);
   const [input, setInput] = useState(destination);
@@ -41,6 +41,7 @@ export default function CurationPage({ query, username }: Props) {
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState('');
   const postFormRef = useRef<HTMLFormElement>(null);
+  const openedEditRef = useRef<number | null>(null);
 
   useEffect(() => setInput(destination), [destination]);
 
@@ -85,6 +86,15 @@ export default function CurationPage({ query, username }: Props) {
   const categories = [...new Set(locations.map((location) => location.category).filter(Boolean))];
   const visibleLocations = category ? locations.filter((location) => location.category === category) : locations;
   const visiblePosts = posts.filter((post) => `${post.title} ${post.body}`.toLocaleLowerCase('uk').includes(postSearch.trim().toLocaleLowerCase('uk')));
+
+  useEffect(() => {
+    if (!editPostId || openedEditRef.current === editPostId || contentLoading) return;
+    const post = posts.find((item) => item.id === editPostId && item.author === username);
+    if (post) {
+      openedEditRef.current = editPostId;
+      startPost(post);
+    }
+  }, [editPostId, contentLoading, posts, username]);
 
   function handleSearch(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -208,14 +218,14 @@ export default function CurationPage({ query, username }: Props) {
             <p className="curation-state" role="status">Поки що немає локацій для цього запиту. Спробуйте інше місто або змініть фільтр.</p>
           )}
           {!loading && !error && visibleLocations.map((location) => (
-            <article className="curation-card" key={location.id}>
+            <a className="curation-card" href={`#location?id=${location.id}`} key={location.id}>
               <div className="curation-card-art" aria-hidden="true"><Icon name="map" /></div>
               <div className="curation-card-copy">
                 <h3>{location.name}</h3>
                 <p>{[location.city, location.country].filter(Boolean).join(', ')}</p>
                 {location.category && <span>{location.category}</span>}
               </div>
-            </article>
+            </a>
           ))}
         </div>
 

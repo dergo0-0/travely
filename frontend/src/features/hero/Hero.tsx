@@ -15,7 +15,7 @@ export default function Hero() {
         <span className="hero-scroll" aria-hidden="true">
           <Icon name="arrow-down" />
         </span>
-        <a className="hero-photo-cta" href="#destinations">
+        <a className="hero-photo-cta" href="#locations">
           Куди хочете поїхати? <Icon name="arrow-up-right" />
         </a>
       </div>
