@@ -247,14 +247,18 @@ export default function CurationPage({ query, username }: Props) {
           {!contentLoading && !contentError && posts.length === 0 && (cover || isTokyo) && <div className="curation-empty-city" role="status"><h3>Історії ще попереду</h3><p>Поки що немає постів про «{destination}». {username ? 'Розкажіть про нього першим.' : 'Зареєструйтеся, щоб поділитися своєю історією.'}</p>{username ? <button className="curation-primary-button" type="button" onClick={() => startPost()}>Написати пост</button> : <a className="curation-primary-button" href="#register">Зареєструватися</a>}</div>}
           {username && !contentLoading && !contentError && (!cover || cover.uploaded_by === username) && <form className="curation-cover-form" onSubmit={handleCoverSave}>
             <div><h3>{cover ? 'Оновити головне фото' : 'Додати головне фото міста'}</h3><p>Фото з’явиться на обкладинці підбірки для «{destination}».</p></div>
-            <input type="file" accept="image/jpeg,image/png,image/webp" aria-label="Головне фото міста" onChange={(event) => setCoverImage(event.target.files?.[0] ?? null)} required />
+            <label className="curation-file-picker">
+              <input type="file" accept="image/jpeg,image/png,image/webp" aria-label="Головне фото міста" onChange={(event) => setCoverImage(event.target.files?.[0] ?? null)} required />
+              <span>Обрати фото</span>
+            </label>
+            <span className="curation-file-name" title={coverImage?.name}>{coverImage?.name || 'Файл не обрано'}</span>
             <button className="curation-primary-button" type="submit" disabled={!coverImage || saving}>Зберегти фото</button>
           </form>}
           {username && formOpen && <form className="curation-post-form" ref={postFormRef} onSubmit={handlePostSave}>
             <h3>{editingPost ? 'Редагувати пост' : `Новий пост про ${destination}`}</h3>
             <label>Назва поста<input value={postTitle} onChange={(event) => setPostTitle(event.target.value)} maxLength={160} required /></label>
             <label>Ваша історія<textarea value={postBody} onChange={(event) => setPostBody(event.target.value)} rows={6} required /></label>
-            <label>Фото (необов’язково)<input type="file" accept="image/jpeg,image/png,image/webp" onChange={(event) => setPostImage(event.target.files?.[0] ?? null)} /></label>
+            <label>Фото (необов’язково)<span className="curation-file-picker"><input type="file" accept="image/jpeg,image/png,image/webp" onChange={(event) => setPostImage(event.target.files?.[0] ?? null)} /><span>Обрати фото</span></span><span className="curation-file-name" title={postImage?.name}>{postImage?.name || 'Файл не обрано'}</span></label>
             <div className="curation-form-actions"><button className="curation-primary-button" type="submit" disabled={saving}>{saving ? 'Зберігаємо…' : 'Зберегти пост'}</button><button className="curation-text-button" type="button" onClick={() => setFormOpen(false)}>Скасувати</button></div>
           </form>}
           {saveError && <p className="curation-form-error" role="alert">{saveError}</p>}

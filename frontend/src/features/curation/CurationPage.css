@@ -150,7 +150,12 @@
 .curation-cover-form > div { flex: 1 1 250px; }
 .curation-cover-form h3, .curation-post-form h3 { margin: 0 0 5px; font-weight: 500; }
 .curation-cover-form p { margin: 0; color: var(--muted); font-size: 12px; }
-.curation-cover-form > input { max-width: 100%; flex: 1 1 200px; }
+.curation-file-picker { position: relative; display: inline-flex; min-height: 48px; padding: 0 22px; align-items: center; justify-content: center; border: 1px solid var(--plum); border-radius: 999px; color: var(--plum); background: #fff; cursor: pointer; white-space: nowrap; }
+.curation-file-picker:hover { background: #f5f0f3; }
+.curation-file-picker:focus-within { outline: 2px solid var(--plum); outline-offset: 3px; }
+.curation-file-picker input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.curation-file-name { min-width: 0; max-width: 260px; overflow: hidden; color: var(--muted); font-size: 13px; text-overflow: ellipsis; white-space: nowrap; }
+.curation-cover-form > .curation-file-name { flex: 1 1 150px; }
 .curation-post-form { display: flex; align-items: stretch; flex-direction: column; }
 .curation-post-form label { display: flex; width: 100%; flex-direction: column; gap: 8px; font-size: 13px; }
 .curation-post-form input:not([type=file]), .curation-post-form textarea { width: 100%; min-height: 48px; padding: 12px 14px; border: 1px solid #cbc3c8; border-radius: 12px; color: var(--ink); background: #fff; }

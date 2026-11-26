@@ -30,7 +30,18 @@ async function submit<T>(path: string, method: 'POST' | 'PATCH', form: FormData)
   const response = await apiRequest(path, { method, body: form });
   if (!response.ok) {
     if (response.status === 401 || response.status === 403) throw new Error('Увійдіть у профіль, щоб зберегти зміни.');
-    throw new Error('Не вдалося зберегти. Перевірте поля та спробуйте ще раз.');
+    const payload: unknown = await response.json().catch(() => null);
+    if (payload && typeof payload === 'object') {
+      const fields = payload as Record<string, unknown>;
+      for (const key of ['image', 'city', 'title', 'body', 'non_field_errors', 'detail']) {
+        const value = fields[key];
+        const message = Array.isArray(value) ? value[0] : value;
+        if (typeof message === 'string') throw new Error(message);
+      }
+    }
+    throw new Error(response.status >= 500
+      ? 'Сервер не зміг зберегти файл. Спробуйте пізніше.'
+      : 'Не вдалося зберегти. Перевірте файл та спробуйте ще раз.');
   }
   return response.json() as Promise<T>;
 }
